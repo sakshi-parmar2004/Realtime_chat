@@ -6,7 +6,7 @@ import cloudinary from "../config/cloudinary.js";
  
 export const signup = async(req,res) => {
 
-
+  // it is used to extract the name, email, and password properties from the request body
     const {name,email, password} = req.body;
   try {
      
@@ -24,7 +24,8 @@ export const signup = async(req,res) => {
       {
        return res.json({success:false,message:"Password length is less than 6"});
       }
-   
+   //it is used to generate a salt value for hashing the password. The number 10 indicates the cost factor,
+   //  which determines the computational complexity of the hashing process.
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password,salt);
     const newUser=  new User({email,name,password:hashedPassword});

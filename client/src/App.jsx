@@ -15,6 +15,8 @@ import SettingsPage from './pages/Settings'
 const App = () => {
   const {user, checkAuth , isCheckingAuth} = useAuthStore();
   const {theme} =useThemeStore();
+  //it ensures that the checkAuth function is called only once when the component mounts
+  //and not on every render. This is important for performance and to avoid unnecessary API calls.
   useEffect(() => {
     checkAuth();
  } , [checkAuth]);

@@ -56,7 +56,7 @@ export const signup = async(req,res) => {
 
 };
 export const login = async(req,res) => {
-  const {email, password} = req.body;
+  const {email, password } = req.body;
   try {
     
     if(!email || !password)
@@ -64,7 +64,7 @@ export const login = async(req,res) => {
           return res.json({success:false, message:"All credentials required"})
       }
 
-      const UserExist = await User.findOne({email:email})
+      const UserExist = await User.findOne({email})
     if(!UserExist)
     {
         return res.json({success:false,message:"User doesn't exists"});
@@ -78,10 +78,10 @@ export const login = async(req,res) => {
     }
     generateToken(UserExist._id , res)
     res.json({
-      _id:UserExist._id,
-          name:UserExist.name,
-          email:UserExist.email,
-          profile_pic:UserExist.profile_pic
+      _id: UserExist._id,
+          name: UserExist.name,
+          email: UserExist.email,
+          profile_pic: UserExist.profile_pic
     })
 
 

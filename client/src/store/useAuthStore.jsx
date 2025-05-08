@@ -3,7 +3,7 @@ import { axiosInstance } from '../lib/axios';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
 
-const BACKEND_URL = import.meta.env.MODE ==="development" ? 'http://localhost:3000' :'/'
+const BACKEND_URL = import.meta.env.MODE === "development" ? 'http://localhost:3000' :'/'
 export const useAuthStore = create((set,get) => ({
   user: null,
   isSigning: false,
@@ -62,6 +62,12 @@ login : async (formData) => {
     set({ isLoggingIn: true });
     try {
         const res = await axiosInstance.post('/auth/login', formData);
+        console.log('Login response:', res.data);
+        if(res.data.success === false)
+        {
+            toast.error(res.data.message);
+            return;
+        }
         set({ user: res.data });
         toast.success('Logged in successfully!');
         get().connectSocket(); // Connect to socket after login

@@ -31,9 +31,15 @@ app.use('/api/messages', router);
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/dist')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-  }
-  );  
+    const indexPath = path.join(__dirname, '../client/dist', 'index.html');
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('Error sending index.html:', err);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+  });
+  
 }
 
 
